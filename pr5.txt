@@ -100,15 +100,21 @@ print(model1.predict_output_word(dat[i][0]))
 
 
 from sklearn.decomposition import PCA
-from matplotlib import pyplot
-X = model1[model1.wv.vocab]
+import matplotlib.pyplot as plt
+
+words = list(model1.wv.key_to_index.keys())
+vectors = [model1.wv[word] for word in words]
+
 pca = PCA(n_components=2)
-result = pca.fit_transform(X)
-pyplot.scatter(result[:, 0], result[:, 1])
-words = list(model1.wv.vocab)
+result = pca.fit_transform(vectors)
+
+plt.figure(figsize=(10, 10))
+plt.scatter(result[:, 0], result[:, 1])
+
 for i, word in enumerate(words):
-  pyplot.annotate(word, xy=(result[i, 0], result[i, 1]))
-pyplot.show()
+    plt.annotate(word, xy=(result[i, 0], result[i, 1]))
+
+plt.show()
 
 
 Explanation :
